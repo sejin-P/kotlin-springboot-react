@@ -7,12 +7,12 @@ import javax.persistence.*
 data class Employee(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
+    private var id: Long,
     @Column(name="first_name")
-    var firstName: String,
+    private var firstName: String,
     @Column(name="last_name")
-    var lastName: String,
+    private var lastName: String,
     @Column(name="email_id")
-    var emailId: String,
+    private var emailId: String,
 ) {
 }
