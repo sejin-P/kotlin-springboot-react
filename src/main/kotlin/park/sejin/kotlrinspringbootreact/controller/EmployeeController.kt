@@ -30,6 +30,7 @@ class EmployeeController(
         return employeeRepository.save(employee)
     }
 
+    //TODO exception handling better
     @GetMapping("/employees/{id}")
     fun getEmployee(
         @PathVariable id: Long
