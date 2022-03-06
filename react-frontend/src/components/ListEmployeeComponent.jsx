@@ -35,9 +35,9 @@ class ListEmployeeComponent extends Component {
                                 this.state.employees.map(
                                     employee =>
                                         <tr key = {employee.id}>
-                                            <td> { employee.firstName }</td>
-                                            <td> { employee.lastName }</td>
-                                            <td> { employee.emailId }</td>
+                                            <td> { employee.first_name }</td>
+                                            <td> { employee.last_name }</td>
+                                            <td> { employee.email_id }</td>
                                         </tr>
                                 )
                             }
