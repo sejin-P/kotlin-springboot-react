@@ -6,9 +6,9 @@ import FooterComponent from "./components/FooterComponent";
 
 function App() {
   return (
-    <div className="container">
+    <div>
         <HeaderComponent/>
-        <div>
+        <div className="container">
             <ListEmployeeComponent/>
         </div>
         <FooterComponent/>
