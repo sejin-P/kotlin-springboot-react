@@ -50,18 +50,35 @@ class EmployeeController(
         @RequestBody
         employeeInfo: Employee,
     ): ResponseEntity<Employee> {
+        val employee: Employee
         try {
-            val employee = employeeRepository.getById(id)
-            employee.apply {
-                this.firstName = employeeInfo.firstName
-                this.lastName = employeeInfo.lastName
-                this.emailId = employeeInfo.emailId
-            }
-
-            val updatedEmployee = employeeRepository.save(employee)
-            return ResponseEntity.ok(updatedEmployee)
+            employee = employeeRepository.getById(id)
         } catch (e: EntityNotFoundException) {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, "employee $id")
         }
+
+        employee.apply {
+            this.firstName = employeeInfo.firstName
+            this.lastName = employeeInfo.lastName
+            this.emailId = employeeInfo.emailId
+        }
+
+        val updatedEmployee = employeeRepository.save(employee)
+        return ResponseEntity.ok(updatedEmployee)
+    }
+
+    @DeleteMapping("/employees/{id}")
+    fun deleteEmployee(
+        @PathVariable
+        id: Long,
+    ): ResponseEntity<Map<String, Boolean>> {
+        val employee: Employee
+        try {
+            employeeRepository.deleteById(id)
+        } catch (e: EntityNotFoundException) {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, "employee $id")
+        }
+
+        return ResponseEntity.ok(hashMapOf("deleted" to true))
     }
 }
