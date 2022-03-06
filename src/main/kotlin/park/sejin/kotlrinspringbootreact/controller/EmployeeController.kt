@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
-import park.sejin.kotlrinspringbootreact.exception.ResourceNotFoundException
 import park.sejin.kotlrinspringbootreact.model.Employee
 import park.sejin.kotlrinspringbootreact.repository.EmployeeRepository
 import javax.persistence.EntityNotFoundException
@@ -39,6 +38,28 @@ class EmployeeController(
         try {
             val employee = employeeRepository.getById(id)
             return ResponseEntity.ok(employee)
+        } catch (e: EntityNotFoundException) {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, "employee $id")
+        }
+    }
+
+    @PutMapping("/employees/{id}")
+    fun updateEmployee(
+        @PathVariable
+        id: Long,
+        @RequestBody
+        employeeInfo: Employee,
+    ): ResponseEntity<Employee> {
+        try {
+            val employee = employeeRepository.getById(id)
+            employee.apply {
+                this.firstName = employeeInfo.firstName
+                this.lastName = employeeInfo.lastName
+                this.emailId = employeeInfo.emailId
+            }
+
+            val updatedEmployee = employeeRepository.save(employee)
+            return ResponseEntity.ok(updatedEmployee)
         } catch (e: EntityNotFoundException) {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, "employee $id")
         }

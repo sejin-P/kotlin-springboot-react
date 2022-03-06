@@ -11,12 +11,12 @@ class Employee(
     val id: Long,
     @JsonProperty("first_name")
     @Column(name="first_name")
-    val firstName: String,
+    var firstName: String,
     @JsonProperty("last_name")
     @Column(name="last_name")
-    val lastName: String,
+    var lastName: String,
     @JsonProperty("email_id")
     @Column(name="email_id")
-    val emailId: String,
+    var emailId: String,
 ) {
 }
